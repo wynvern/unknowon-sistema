@@ -19,6 +19,7 @@ public class Notas {
     private String numeroNota;
     private boolean pendurado;
     private Float precoTotal;
+    private int idTipoPagamento;
 
     /**
      * @return the id
@@ -116,5 +117,19 @@ public class Notas {
      */
     public void setPrecoTotal(Float precoTotal) {
         this.precoTotal = precoTotal;
+    }
+
+    /**
+     * @return the idTipoPagamento
+     */
+    public int getIdTipoPagamento() {
+        return idTipoPagamento;
+    }
+
+    /**
+     * @param idTipoPagamento the idTipoPagamento to set
+     */
+    public void setIdTipoPagamento(int idTipoPagamento) {
+        this.idTipoPagamento = idTipoPagamento;
     }
 }

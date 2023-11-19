@@ -13,7 +13,9 @@ import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -39,6 +41,22 @@ public class JFSistema extends javax.swing.JFrame {
     public boolean themeColor = true;
     public static boolean perfilOpened = false;
     public static usuarioSistema usuarioLogado = null;  
+    
+    // Set frame to the top by name
+    private static void bringInternalFrameToFront(JDesktopPane desktopPane, String frameTitle) {
+        JInternalFrame[] allFrames = desktopPane.getAllFrames();
+        for (JInternalFrame frame : allFrames) {
+            if (frame.getTitle().equals(frameTitle)) {
+                try {
+                    frame.toFront();
+                    frame.setSelected(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
     
     public static void updateProfileStuff() {
         byte[] imageData = usuarioLogado.getImagemPerfil();
@@ -492,6 +510,7 @@ public class JFSistema extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem1);
 
+        jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cartao.png"))); // NOI18N
         jMenuItem14.setText("Metodos de Pagamento");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
@@ -560,6 +579,7 @@ public class JFSistema extends javax.swing.JFrame {
 
         jMenu6.setText("Configurações");
 
+        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pessoa.png"))); // NOI18N
         jMenuItem12.setText("Perfil");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
@@ -613,6 +633,8 @@ public class JFSistema extends javax.swing.JFrame {
             }
             janela.setVisible(true);
             produtosOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Cadastro de Produtos");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -627,6 +649,8 @@ public class JFSistema extends javax.swing.JFrame {
             }
             janela.setVisible(true);
             clientesOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Cadastro de Clientes");
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -648,6 +672,8 @@ public class JFSistema extends javax.swing.JFrame {
             }
             janela.setVisible(true);
             PDVOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "PDV");
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -662,6 +688,8 @@ public class JFSistema extends javax.swing.JFrame {
             }
             janela.setVisible(true);
             notasEntradaOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Notas de Entrada");
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -752,9 +780,15 @@ public class JFSistema extends javax.swing.JFrame {
         if (!fornecedoresOpened) {
             JIFFornecedores janela = new JIFFornecedores();
             JDP.add(janela);
-            janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
+            try {
+                janela.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(JFSistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
             janela.setVisible(true);
             fornecedoresOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Cadastro de Fornecedores");
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
@@ -763,20 +797,18 @@ public class JFSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        jMenuItem14ActionPerformed(null);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         if (!pagamentosOpened) {
             JIFPagamentos janela = new JIFPagamentos();
             JDP.add(janela);
-            try {
-                janela.setMaximum(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(JFSistema.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
             janela.setVisible(true);
             pagamentosOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Métodos de Pagamento");
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 

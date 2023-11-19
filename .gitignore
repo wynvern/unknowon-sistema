@@ -25,3 +25,4 @@ config.ini
 *.properties
 *.ini
 *.ini
+/build/

@@ -25,7 +25,8 @@ public class JIFPDV extends javax.swing.JInternalFrame {
     
     private Entidades getEntidade(int idPesquisa) {
         DataSource dataSource = new DataSource();
-        Entidades result = null;
+        Entidades result = new Entidades();
+        boolean userFound = false;
 
         try {
             String SQL = "SELECT * FROM entidades WHERE id = ?;";
@@ -35,7 +36,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        result = new Entidades();
+                        userFound = true;
                         result.setId(rs.getInt("id"));
                         result.setNome(rs.getString("nome"));
                         result.setTipo(rs.getString("tipo"));
@@ -48,6 +49,10 @@ public class JIFPDV extends javax.swing.JInternalFrame {
             Logger.getLogger(JIFPDV.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        if (userFound == false) {
+            result.setNome("Não Encontrado");
+        }
+        
         return result;
     }
     
@@ -92,7 +97,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         Entidades buscaEntidade = getEntidade(rs.getInt("idEntidade"));
-                        model.addRow(new Object[]{rs.getInt("id"), buscaEntidade.getNome(), rs.getString("data"), rs.getString("precoTotal"), rs.getBoolean("pendurado") ? "Sim" : "Não"});
+                        model.addRow(new Object[]{rs.getInt("id"), buscaEntidade.getNome(), rs.getString("data"), rs.getString("precoTotal")});
                     }
                     rs.close();
                 }

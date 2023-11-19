@@ -35,23 +35,29 @@ public class JIFVender extends javax.swing.JInternalFrame {
 
         ComboItem selectedComboItem = (ComboItem) clientesBox.getSelectedItem();
         String value = selectedComboItem.getValue();    
+        
+        ComboItem selectedComboItemPRoduto = (ComboItem) produtosBox.getSelectedItem();
+        String valueProduto = selectedComboItemPRoduto.getValue();    
+        
         Timestamp timestamp = new Timestamp(currentTimeMillis()) {};
         int generatedId = 0;
         
         nota.setIdEntidade(Integer.parseInt(value));
         nota.setTipo("Saida");
         nota.setData(timestamp);
+        nota.setIdTipoPagamento(Integer.parseInt(valueProduto));
 
         Connection con = dataSource.getConnection();
         PreparedStatement ps = null;
         try{
-            String SQL = "INSERT INTO notas (idEntidade, tipo, data, precoTotal) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO notas (idEntidade, tipo, data, precoTotal, idTipoPagamento) VALUES (?, ?, ?, ?, ?)";
             
             ps = con.prepareStatement(SQL);
             ps.setInt(1,nota.getIdEntidade());
             ps.setString(2,nota.getTipo());
             ps.setTimestamp(3,nota.getData());
-            ps.setFloat(5, Float.parseFloat(total.getText()));
+            ps.setFloat(4, Float.parseFloat(total.getText()));
+            ps.setInt(5, nota.getIdTipoPagamento());
 
             // executa a inserção no banco
             ps.executeUpdate();
@@ -231,6 +237,48 @@ public class JIFVender extends javax.swing.JInternalFrame {
         }
     }
     
+    private void atualizarListaPagamentos(String searchId, String searchDesc) {
+        DataSource dataSource = new DataSource();
+        PreparedStatement ps = null;
+        try{
+            pagamentosBox.removeAllItems();
+            String SQL = "SELECT * FROM tipoPagamento WHERE (id = ? OR ? = '') AND (descricao LIKE ? OR ? LIKE '')";
+            
+            try {
+                ps = dataSource.getConnection().prepareStatement(SQL);
+                ps.setString(1, (searchId));
+                ps.setString(2, (searchId));
+                ps.setString(3, "%" + searchDesc + "%");
+                ps.setString(4, searchDesc);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(JIFProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            ResultSet rs = null;
+            try {
+                rs = ps.executeQuery();
+            } catch (SQLException ex) {
+                Logger.getLogger(JIFProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            while(rs.next()){
+                ComboItem comboItem = new ComboItem(rs.getString("descricao") + "   -   Código: " + rs.getString("id"), rs.getString("id"));
+                pagamentosBox.addItem(comboItem);
+            }
+            
+            try {
+                // fecha o statement e o datasource
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(JIFClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            dataSource.closeDataSource();
+    }   catch (SQLException ex) {
+            Logger.getLogger(JIFClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     /**
      * Creates new form JIFProdutos
@@ -239,6 +287,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
         initComponents();
         atualizarListaProdutos("", "");
         atualizarListaClientes("", "");
+        atualizarListaPagamentos("", "");
     }
 
     /**
@@ -275,7 +324,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
         table = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        clientesBox1 = new javax.swing.JComboBox<>();
+        pagamentosBox = new javax.swing.JComboBox<>();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
 
@@ -550,7 +599,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(clientesBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pagamentosBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -564,7 +613,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(jButton11))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(clientesBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pagamentosBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -596,10 +645,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -733,17 +782,25 @@ public class JIFVender extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_produtosBoxActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        String valuePesquisa = JOptionPane.showInputDialog(null, "Descrição do tipo de pagamento:");
+        String idPesquisa = JOptionPane.showInputDialog(null, "Id do pagamento:");
+        
+        if (valuePesquisa.isEmpty()) valuePesquisa = "";
+        if (idPesquisa.isEmpty()) idPesquisa = "";
+        
+        System.out.println(idPesquisa);
+        System.out.println(valuePesquisa);
+
+        atualizarListaPagamentos(idPesquisa, valuePesquisa);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+        atualizarListaPagamentos("", "");
     }//GEN-LAST:event_jButton11ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<ComboItem> clientesBox;
-    private javax.swing.JComboBox<ComboItem> clientesBox1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -766,6 +823,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<ComboItem> pagamentosBox;
     private javax.swing.JComboBox<ComboItem> produtosBox;
     private javax.swing.JSpinner quantidade;
     private javax.swing.JTable table;

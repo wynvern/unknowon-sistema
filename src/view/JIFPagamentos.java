@@ -112,7 +112,7 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
-        setTitle("Metodos de Pagamento");
+        setTitle("Métodos de Pagamento");
         setToolTipText("");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cartao.png"))); // NOI18N
 
@@ -191,12 +191,12 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cubo.png"))); // NOI18N
-        jLabel1.setText("Codigo:");
+        jLabel1.setText("Código:");
 
         codigo.setEditable(false);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/texto.png"))); // NOI18N
-        jLabel2.setText("Descricao:");
+        jLabel2.setText("Descrição:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -227,13 +227,18 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sair.png"))); // NOI18N
         jButton1.setText("Sair");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Descricao"
+                "Código", "Descrição"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -397,6 +402,11 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
         codigo.setText("");
         descricao.setText("");
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFSistema.pagamentosOpened = false;
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

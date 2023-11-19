@@ -32,3 +32,7 @@ Projeto para a Cantina da Carla
 - [ ] Validação rigorosa dos tipos de entrada para pesquisa.
 
 - [ ] Correção de inconsistências nos dados da nota.
+
+- [ ] Código tranca quando usuário a ser chamado não está presente no banco.
+
+- [ ] Quanto janela já está aberta, selecioná-la
