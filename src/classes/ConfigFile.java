@@ -4,6 +4,7 @@
  */
 package classes;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,10 +23,12 @@ public class ConfigFile {
         Properties defaultProperties = new Properties();
 
         // Set default values for the variables
-        defaultProperties.setProperty("variable1", "default_value1");
-        defaultProperties.setProperty("variable2", "default_value2");
-        defaultProperties.setProperty("variable3", "default_value3");
-        defaultProperties.setProperty("variable4", "default_value4");
+        defaultProperties.setProperty("database", "unknown");
+        defaultProperties.setProperty("hostname", "localhost");
+        defaultProperties.setProperty("password", "x");
+        defaultProperties.setProperty("port", "3306");
+        defaultProperties.setProperty("theme", "white");
+        defaultProperties.setProperty("username", "x");
 
         // Write the default properties to the file
         try (OutputStream output = new FileOutputStream(filePath)) {
@@ -34,6 +37,20 @@ public class ConfigFile {
     }
     
     public static Properties getVariables() {
+        String filePath = "config.ini";
+
+        // Create a File object with the specified path
+        File file = new File(filePath);
+
+        // Check if the file exists
+        if (!file.exists()) {
+            try {
+                createDefaultINIFile("config.ini");
+            } catch (IOException ex) {
+                Logger.getLogger(ConfigFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         Properties properties = new Properties();
         try (InputStream input = new FileInputStream("config.ini")) {
             // Load the properties from the file
