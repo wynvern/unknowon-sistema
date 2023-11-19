@@ -17,7 +17,7 @@ Projeto para a Cantina da Carla
   - 0 (PDV): Se 1, o usuário possui permissão no PDV.
   - 1 (Geral): Se verdadeiro (1) ou falso (0).
 
-- [x] Opção de logout.
+- [ ] Opção de logout.
 
 - [x] Controle de Registros de Saída (RS) em aberto no PDV e notas.
 
