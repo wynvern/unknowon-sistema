@@ -24,7 +24,7 @@ import java.sql.Timestamp;
  */
 public class JIFVender extends javax.swing.JInternalFrame {
     
-    private void salvarDatabase(boolean isPendurado) {
+    private void salvarDatabase() {
         DataSource dataSource = new DataSource();
         Notas nota = new Notas();
         int rows = table.getRowCount();
@@ -41,18 +41,16 @@ public class JIFVender extends javax.swing.JInternalFrame {
         nota.setIdEntidade(Integer.parseInt(value));
         nota.setTipo("Saida");
         nota.setData(timestamp);
-        nota.setPendurado(isPendurado);
 
         Connection con = dataSource.getConnection();
         PreparedStatement ps = null;
         try{
-            String SQL = "INSERT INTO notas (idEntidade, tipo, data, pendurado, precoTotal) VALUES (?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO notas (idEntidade, tipo, data, precoTotal) VALUES (?, ?, ?, ?)";
             
             ps = con.prepareStatement(SQL);
             ps.setInt(1,nota.getIdEntidade());
             ps.setString(2,nota.getTipo());
             ps.setTimestamp(3,nota.getData());
-            ps.setBoolean(4,nota.isPendurado());
             ps.setFloat(5, Float.parseFloat(total.getText()));
 
             // executa a inserção no banco
@@ -273,7 +271,6 @@ public class JIFVender extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -470,24 +467,16 @@ public class JIFVender extends javax.swing.JInternalFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/vender.png"))); // NOI18N
-        jButton4.setText("Vender");
+        jButton4.setText("Finalizar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cartao.png"))); // NOI18N
-        jButton5.setText("Crediário");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
             }
         });
 
@@ -497,8 +486,6 @@ public class JIFVender extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -506,9 +493,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                .addComponent(jButton4)
                 .addContainerGap())
         );
 
@@ -558,8 +543,8 @@ public class JIFVender extends javax.swing.JInternalFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -677,20 +662,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
         atualizarListaClientes("", "");
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        int opcao = JOptionPane.showConfirmDialog(null,"Deseja realmente pendurar a conta?","Confirmação",JOptionPane.YES_OPTION);
-        if(opcao == JOptionPane.YES_OPTION) {
-            salvarDatabase(true);
-            JOptionPane.showMessageDialog(null, "Venda pendurada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            JFSistema.venderOpened = false;
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int opcao = JOptionPane.showConfirmDialog(null,"Deseja realmente concluir a conta?","Confirmação",JOptionPane.YES_OPTION);
+        int opcao = JOptionPane.showConfirmDialog(null,"Deseja realmente concluir a venda?","Venda",JOptionPane.YES_OPTION);
         if(opcao == JOptionPane.YES_OPTION) {
-            salvarDatabase(false);
+            salvarDatabase();
             JOptionPane.showMessageDialog(null, "Venda finalizada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             JFSistema.venderOpened = false;
@@ -709,7 +684,6 @@ public class JIFVender extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;

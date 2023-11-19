@@ -7,7 +7,6 @@ package view;
 import classes.ComboItem;
 import static classes.ConverterData.converterEmData;
 import dao.DataSource;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +51,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
         return result;
     }
     
-    private void atualizarTabelaNotas(String codigoPesquisa, String idEntidadePesquisa, Timestamp dataInicial, Timestamp dataFinal, Boolean isPendurado) {
+    private void atualizarTabelaNotas(String codigoPesquisa, String idEntidadePesquisa, Timestamp dataInicial, Timestamp dataFinal) {
         DataSource dataSource = new DataSource();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
 
@@ -62,10 +61,6 @@ public class JIFPDV extends javax.swing.JInternalFrame {
             }
             // HANDLE BOTH DATES
             StringBuilder SQLBuilder = new StringBuilder("SELECT * FROM notas WHERE (id = ? OR ? = '') AND (idEntidade = ? OR ? = '') AND (tipo = ?)");
-
-            if (isPendurado != null) {
-                SQLBuilder.append(" AND (pendurado = ? OR ? IS NULL)");
-            }
             
             if (dataInicial != null && dataFinal != null) {
                 SQLBuilder.append(" AND (data BETWEEN ? AND ?)");
@@ -83,11 +78,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                 ps.setString(5, "Saida");
 
                 int indexNow = 6;
-                
-                if (isPendurado != null) {
-                    ps.setBoolean(indexNow++, isPendurado);
-                    ps.setBoolean(indexNow++, isPendurado);
-                }
+               
                 
                 if (dataInicial != null && dataFinal != null) {
                     ps.setTimestamp(indexNow++, dataInicial);
@@ -171,7 +162,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
     public JIFPDV() {
         initComponents();
         atualizarListaClientes("", "");
-        atualizarTabelaNotas("", "", null, null, null);
+        atualizarTabelaNotas("", "", null, null);
     }
 
     /**
@@ -194,12 +185,10 @@ public class JIFPDV extends javax.swing.JInternalFrame {
         clientesBox = new javax.swing.JComboBox<>();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        pendurado = new javax.swing.JToggleButton();
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -263,8 +252,6 @@ public class JIFPDV extends javax.swing.JInternalFrame {
             }
         });
 
-        pendurado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cartao.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -286,9 +273,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pendurado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(48, 48, 48)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
@@ -309,16 +294,10 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(pendurado)))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -348,14 +327,6 @@ public class JIFPDV extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cartao.png"))); // NOI18N
-        jButton8.setText("Marcar como Paga");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -365,8 +336,6 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -375,8 +344,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton8))
+                    .addComponent(jButton5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -385,11 +353,11 @@ public class JIFPDV extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Cliente", "Data", "Preço Total", "Em aberto"
+                "Código", "Cliente", "Data", "Preço Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, true, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -431,19 +399,10 @@ public class JIFPDV extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        JFSistema.abrirJIFVender();
-        JFSistema.venderOpened = true;
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
         JFSistema.PDVOpened = false;
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        atualizarTabelaNotas("", "", null, null, null);
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String valuePesquisa = JOptionPane.showInputDialog(null, "Nome do cliente:");
@@ -466,12 +425,11 @@ public class JIFPDV extends javax.swing.JInternalFrame {
         atualizarListaClientes("", "");
         dataInicial.setText("");
         dataFinal.setText("");
-        atualizarTabelaNotas("", "", null, null, null);
+        atualizarTabelaNotas("", "", null, null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Timestamp inicialD = null;
-        Boolean isPendurado = pendurado.isSelected();
         Timestamp finalD = null;
         if (!dataInicial.getText().equals("  /  /  ")) {
             inicialD = converterEmData(dataInicial.getText());
@@ -483,48 +441,17 @@ public class JIFPDV extends javax.swing.JInternalFrame {
         ComboItem selectedComboItem = (ComboItem) clientesBox.getSelectedItem();
         String value = selectedComboItem.getValue();
 
-        atualizarTabelaNotas("", value, inicialD, finalD, isPendurado);
+        atualizarTabelaNotas("", value, inicialD, finalD);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        int row = table.getSelectedRow();
-        Boolean statusAtual = "Sim".equalsIgnoreCase(table.getValueAt(row, 4).toString()) ? true : false;
-        if (row < 0) {
-            JOptionPane.showMessageDialog(null, "Nenhuma coluna selecionada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (statusAtual == false) {
-            JOptionPane.showMessageDialog(null, "A nota selecionada já foi paga.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        int opcao = JOptionPane.showConfirmDialog(null,"Deseja realmente marcar como paga?","Confirmação",JOptionPane.YES_OPTION);
-        if(opcao == JOptionPane.YES_OPTION) {
-            DataSource dataSource = new DataSource();
-            Connection con = dataSource.getConnection();
-            PreparedStatement ps = null;
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        atualizarTabelaNotas("", "", null, null);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-            try{
-                String SQL = "UPDATE notas SET pendurado=? WHERE id=?";
-
-                ps = con.prepareStatement(SQL);
-                ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
-                ps.setBoolean(1, false);
-
-                ps.executeUpdate();
-                ps.close();
-            }
-            catch (SQLException ex){
-                //System.err.println("Erro ao salvar os dados "+ex.getMessage());
-                JOptionPane.showMessageDialog(null,"Erro ao alterar!\n"+ex);
-            }
-            finally{
-                // fecha o statement e o datasource
-                dataSource.closeDataSource();
-            }
-        }
-        atualizarTabelaNotas("", "", null, null, null);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        JFSistema.abrirJIFVender();
+        JFSistema.venderOpened = true;
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -538,14 +465,12 @@ public class JIFPDV extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton pendurado;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
