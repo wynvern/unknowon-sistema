@@ -8,9 +8,9 @@ Projeto para a Cantina da Carla
 
 - [ ] Atualização automática do Ponto de Venda (PDV) ao finalizar uma venda.
 
-- [ ] Funções que recuperam informações por meio de identificadores (ID) para remover código redundante em outros arquivos.
+~~- [ ] Funções que recuperam informações por meio de identificadores (ID) para remover código redundante em outros arquivos.~~  
 
-- [ ] Opção para adicionar clientes ou fornecedores durante a seleção.
+- [x] Opção para adicionar clientes ou fornecedores durante a seleção.
 
 - [ ] Controle de permissões com código binário (10101010101010101):
 
