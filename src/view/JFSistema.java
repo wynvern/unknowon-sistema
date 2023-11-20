@@ -42,8 +42,21 @@ public class JFSistema extends javax.swing.JFrame {
     public static boolean perfilOpened = false;
     public static usuarioSistema usuarioLogado = null;  
     
+    
+    public static JInternalFrame getInternalFrameByTitle(String title) {
+        JInternalFrame[] frames = JDP.getAllFrames();
+
+        for (JInternalFrame frame : frames) {
+            if (frame.getTitle().equals(title)) {
+                return frame;
+            }
+        }
+
+        return null; // Internal frame not found
+    }
+    
     // Set frame to the top by name
-    private static void bringInternalFrameToFront(JDesktopPane desktopPane, String frameTitle) {
+    public static void bringInternalFrameToFront(JDesktopPane desktopPane, String frameTitle) {
         JInternalFrame[] allFrames = desktopPane.getAllFrames();
         for (JInternalFrame frame : allFrames) {
             if (frame.getTitle().equals(frameTitle)) {
@@ -82,6 +95,8 @@ public class JFSistema extends javax.swing.JFrame {
             }
             janela.setVisible(true);
             venderOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Vender");
         }
     }
     
@@ -280,6 +295,11 @@ public class JFSistema extends javax.swing.JFrame {
         jButton5.setText("Movimentação de Estoque");
         jButton5.setContentAreaFilled(false);
         jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/inventario.png"))); // NOI18N
         jButton6.setText("Inventário de Estoque");
@@ -298,6 +318,11 @@ public class JFSistema extends javax.swing.JFrame {
         jButton7.setText("Relatório de Compras");
         jButton7.setContentAreaFilled(false);
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pessoa.png"))); // NOI18N
         jButton8.setText("Perfil");
@@ -544,6 +569,11 @@ public class JFSistema extends javax.swing.JFrame {
         jMenuBar2.add(jMenu5);
 
         jMenu4.setText("Relatórios");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Estoque.png"))); // NOI18N
@@ -578,6 +608,11 @@ public class JFSistema extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         jMenu6.setText("Configurações");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
 
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pessoa.png"))); // NOI18N
@@ -701,13 +736,11 @@ public class JFSistema extends javax.swing.JFrame {
         if (!inventarioOpened) {
             JIFInventario janela = new JIFInventario();
             JDP.add(janela);
-            try {
-                janela.setMaximum(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(JFSistema.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
             janela.setVisible(true);
             inventarioOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Inventário de Estoque");
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -753,6 +786,8 @@ public class JFSistema extends javax.swing.JFrame {
             janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
             janela.setVisible(true);
             perfilOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Perfil");
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
@@ -765,11 +800,28 @@ public class JFSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        jMenuItem6ActionPerformed(null);
+        // Movimentação
+        if (!movimentacaoOpened) {
+            JIFMovimentacao janela = new JIFMovimentacao();
+            JDP.add(janela);
+            janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
+            janela.setVisible(true);
+            movimentacaoOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Movimentação de Estoque");
+        }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
+        if (!relatorioComprasOpened) {
+            JIFRelatorioCompras janela = new JIFRelatorioCompras();
+            JDP.add(janela);
+            janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
+            janela.setVisible(true);
+            relatorioComprasOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Relatório de Compras");
+        }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -811,6 +863,22 @@ public class JFSistema extends javax.swing.JFrame {
             bringInternalFrameToFront(JDP, "Métodos de Pagamento");
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        jMenuItem8ActionPerformed(null);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        jMenuItem7ActionPerformed(null);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu4ActionPerformed
+
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu6ActionPerformed
 
 
     /**

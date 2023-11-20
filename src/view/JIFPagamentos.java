@@ -4,13 +4,11 @@
  */
 package view;
 
-import classes.ComboItem;
 import dao.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -319,6 +317,7 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
         }
         atualizarTabela();
         int lastRow = table.getRowCount() - 1;
+        if (lastRow < 0) return;
         table.setRowSelectionInterval(lastRow, lastRow);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -358,6 +357,7 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
         }
         atualizarTabela();
         int lastRow = table.getRowCount() - 1;
+        if (lastRow < 0) return;
         table.setRowSelectionInterval(lastRow, lastRow);
     }//GEN-LAST:event_jButton4ActionPerformed
 

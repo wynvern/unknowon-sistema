@@ -108,7 +108,7 @@
                           <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="nome" min="-2" pref="345" max="-2" attributes="0"/>
+                          <Component id="nome" pref="345" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -120,14 +120,14 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="telefone" min="-2" pref="164" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="email" min="-2" pref="211" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="email" pref="211" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="representante" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="representante" pref="162" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -381,13 +381,13 @@
                   <Component id="codigoPesquisa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="nomePesquisa" min="-2" pref="245" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="nomePesquisa" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="representantePesquisa" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>

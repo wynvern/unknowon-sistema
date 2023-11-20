@@ -187,6 +187,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu4ActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
@@ -236,6 +239,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu6ActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem12">
               <Properties>
@@ -531,6 +537,9 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton6">
               <Properties>
@@ -564,6 +573,9 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton8">
               <Properties>

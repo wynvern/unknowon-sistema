@@ -20,6 +20,11 @@ public class ConverterData {
             SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yy");
             Date parsedDate = inputDateFormat.parse(dateString);
 
+            // Set the time to 12:00:00
+            parsedDate.setHours(12);
+            parsedDate.setMinutes(0);
+            parsedDate.setSeconds(0);
+
             // Convert Date to Timestamp
             return new Timestamp(parsedDate.getTime());
         } catch (ParseException e) {

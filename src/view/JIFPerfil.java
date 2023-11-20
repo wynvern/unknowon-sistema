@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import static view.JFSistema.updateProfileStuff;
 import static view.JFSistema.usuarioLogado;
 
@@ -245,17 +246,14 @@ public class JIFPerfil extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.out.println("sfasdfsaf");
         JFileChooser fileChooser = new JFileChooser();
-
-        // Show the file chooser dialog and get the selected file
+        FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+                "Image files", "jpg", "jpeg", "png", "gif", "bmp");
+        fileChooser.setFileFilter(imageFilter);
+        
         int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            // User selected a file
-            System.out.println("Selected file: " + fileChooser.getSelectedFile());
-        } else {
-            // User canceled the operation  
-            System.out.println("Operation canceled by the user.");
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return;
         }
         
 

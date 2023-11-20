@@ -13,7 +13,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import models.Entidades;
 
@@ -487,6 +490,14 @@ public class JIFPDV extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         JFSistema.abrirJIFVender();
         JFSistema.venderOpened = true;
+        JInternalFrame frame = JFSistema.getInternalFrameByTitle("Vender");
+        frame.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                atualizarListaClientes("", "");
+                atualizarTabelaNotas("", "", null, null);
+            }
+        });
     }//GEN-LAST:event_jButton4ActionPerformed
 
 

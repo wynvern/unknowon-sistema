@@ -6,6 +6,7 @@ package view;
 
 import classes.ComboItem;
 import dao.DataSource;
+import java.beans.PropertyVetoException;
 import static java.lang.System.currentTimeMillis;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Notas;
 import java.sql.Timestamp;
+import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import static view.JFSistema.JDP;
+import static view.JFSistema.clientesOpened;
 
 /**
  *
@@ -155,7 +161,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
         PreparedStatement ps = null;
         try{
             produtosBox.removeAllItems();
-            
+            if (searchId.equals("") && searchDesc.equals("")) {
+                ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
+                produtosBox.addItem(emptyItem);
+            }
             
             String SQL = "SELECT * FROM produtos WHERE (id = ? OR ? = '') AND (descricao LIKE ? OR ? LIKE '')";
             
@@ -181,6 +190,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
                 ComboItem comboItem = new ComboItem(rs.getString("descricao") + "   -   Código: " + rs.getString("id"), rs.getString("id"));
                 produtosBox.addItem(comboItem);
             }
+            if (!searchId.equals("") || !searchDesc.equals("")) {
+                ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
+                produtosBox.addItem(emptyItem);
+            }
             
             try {
                 // fecha o statement e o datasource
@@ -199,6 +212,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
         PreparedStatement ps = null;
         try{
             clientesBox.removeAllItems();
+            if (searchId.equals("") && searchDesc.equals("")) {
+                ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
+                clientesBox.addItem(emptyItem);
+            }
             String SQL = "SELECT * FROM entidades WHERE (id = ? OR ? = '') AND (nome LIKE ? OR ? LIKE '') AND (tipo = ?)";
             
             try {
@@ -224,6 +241,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
                 ComboItem comboItem = new ComboItem(rs.getString("nome") + "   -   Código: " + rs.getString("id"), rs.getString("id"));
                 clientesBox.addItem(comboItem);
             }
+            if (!searchId.equals("") || !searchDesc.equals("")) {
+                ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
+                clientesBox.addItem(emptyItem);
+            }
             
             try {
                 // fecha o statement e o datasource
@@ -242,6 +263,11 @@ public class JIFVender extends javax.swing.JInternalFrame {
         PreparedStatement ps = null;
         try{
             pagamentosBox.removeAllItems();
+            if (searchId.equals("") && searchDesc.equals("")) {
+                ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
+                pagamentosBox.addItem(emptyItem);
+            }
+            
             String SQL = "SELECT * FROM tipoPagamento WHERE (id = ? OR ? = '') AND (descricao LIKE ? OR ? LIKE '')";
             
             try {
@@ -265,6 +291,10 @@ public class JIFVender extends javax.swing.JInternalFrame {
             while(rs.next()){
                 ComboItem comboItem = new ComboItem(rs.getString("descricao") + "   -   Código: " + rs.getString("id"), rs.getString("id"));
                 pagamentosBox.addItem(comboItem);
+            }
+            if (!searchId.equals("") || !searchDesc.equals("")) {
+                ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
+                pagamentosBox.addItem(emptyItem);
             }
             
             try {
@@ -317,6 +347,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
         clientesBox = new javax.swing.JComboBox<>();
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
@@ -356,7 +387,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(285, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -368,7 +399,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(total)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4))
                 .addContainerGap())
         );
 
@@ -437,7 +468,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
@@ -481,6 +512,13 @@ public class JIFVender extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -492,6 +530,8 @@ public class JIFVender extends javax.swing.JInternalFrame {
                 .addComponent(jButton7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clientesBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -505,7 +545,9 @@ public class JIFVender extends javax.swing.JInternalFrame {
                         .addComponent(jButton7)
                         .addComponent(jLabel3)
                         .addComponent(jButton9))
-                    .addComponent(clientesBox, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(clientesBox, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -633,7 +675,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -687,6 +729,11 @@ public class JIFVender extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ComboItem selectedComboItem = (ComboItem) produtosBox.getSelectedItem();
         String value = selectedComboItem.getValue();
+        
+        if (value.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum produto para adicionar selecionado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         DataSource dataSource = new DataSource();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -767,7 +814,22 @@ public class JIFVender extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        ComboItem selectedComboItem = (ComboItem) clientesBox.getSelectedItem();
+        String value = selectedComboItem.getValue();    
+        
+        if (value.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum Cliente Selecionado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int rowCount = table.getRowCount();
+        if (rowCount <= 0) {
+            JOptionPane.showMessageDialog(null, "Nenhum produto adicionado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         int opcao = JOptionPane.showConfirmDialog(null,"Deseja realmente concluir a venda?","Venda",JOptionPane.YES_OPTION);
+        
         if(opcao == JOptionPane.YES_OPTION) {
             salvarDatabase();
             JOptionPane.showMessageDialog(null, "Venda finalizada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -798,7 +860,33 @@ public class JIFVender extends javax.swing.JInternalFrame {
         atualizarListaPagamentos("", "");
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (!clientesOpened) {
+            JIFClientes janela = new JIFClientes();
+            JDP.add(janela);
+            try {
+                janela.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(JFSistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            janela.setVisible(true);
+            clientesOpened = true;
+        } else {
+            JFSistema.bringInternalFrameToFront(JDP, "Cadastro de Clientes");
+        }
 
+        JInternalFrame frame = JFSistema.getInternalFrameByTitle("Cadastro de Clientes");
+        frame.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                // Code to execute when the internal frame is closed
+                atualizarListaClientes("", "");
+            }
+        });
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<ComboItem> clientesBox;
     private javax.swing.JButton jButton1;
@@ -807,6 +895,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
