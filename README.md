@@ -41,4 +41,5 @@ Projeto para a Cantina da Carla
 - [ ] Pagar por saldo
 - [ ] Enter para pesquisar
 - [ ] Evitar duplicação de linhas
-- [ ] mudar as cores dos Campos desabilitados 
+- [ ] mudar as cores dos Campos desabilitados
+- [ ] Limite de entrada de dados
