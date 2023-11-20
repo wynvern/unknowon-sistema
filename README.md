@@ -6,7 +6,7 @@ Projeto para a Cantina da Carla
 
 - [x] As notas de saída modificam automaticamente o estoque e exibem o valor total nelas.
 
-- [ ] Atualização automática do Ponto de Venda (PDV) ao finalizar uma venda.
+- [x] Atualização automática do Ponto de Venda (PDV) ao finalizar uma venda.
 
 ~~- [ ] Funções que recuperam informações por meio de identificadores (ID) para remover código redundante em outros arquivos.~~  
 
