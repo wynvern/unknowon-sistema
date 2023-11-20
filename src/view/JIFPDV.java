@@ -23,6 +23,36 @@ import models.Entidades;
  */
 public class JIFPDV extends javax.swing.JInternalFrame {
     
+    private String getPagamento(int idPesquisa) {
+        DataSource dataSource = new DataSource();
+        String result = "";
+        boolean userFound = false;
+
+        try {
+            String SQL = "SELECT * FROM tipoPagamento WHERE id = ?;";
+
+            try (PreparedStatement ps = dataSource.getConnection().prepareStatement(SQL)) {
+                ps.setInt(1, idPesquisa);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        userFound = true;
+                        result = rs.getString("descricao");
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JIFPDV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (userFound == false) {
+            result = "<html><font color='red'>Não Encontrado</font></html>";
+        }
+        
+        return result;
+    }
+    
+    
     private Entidades getEntidade(int idPesquisa) {
         DataSource dataSource = new DataSource();
         Entidades result = new Entidades();
@@ -50,7 +80,7 @@ public class JIFPDV extends javax.swing.JInternalFrame {
         }
 
         if (userFound == false) {
-            result.setNome("Não Encontrado");
+            result.setNome("<html><font color='red'>Não Encontrado</font></html>");
         }
         
         return result;
@@ -97,7 +127,8 @@ public class JIFPDV extends javax.swing.JInternalFrame {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         Entidades buscaEntidade = getEntidade(rs.getInt("idEntidade"));
-                        model.addRow(new Object[]{rs.getInt("id"), buscaEntidade.getNome(), rs.getString("data"), rs.getString("precoTotal")});
+                        String nomePagamnto = getPagamento(rs.getInt("idTipoPagamento"));
+                        model.addRow(new Object[]{rs.getInt("id"), buscaEntidade.getNome(), rs.getString("data"), rs.getString("precoTotal"), nomePagamnto});
                     }
                     rs.close();
                 }
@@ -358,11 +389,11 @@ public class JIFPDV extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Cliente", "Data", "Preço Total"
+                "Código", "Cliente", "Data", "Preço Total", "Tipo Pgto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -9,18 +9,14 @@ import java.beans.PropertyVetoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import models.Notas;
 import static view.JFSistema.JDP;
 import static view.JFSistema.notasAlterarOpened;
 import java.sql.Timestamp;
 import classes.ComboItem;
 import static classes.ConverterData.converterEmData;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import models.Entidades;
@@ -108,7 +104,8 @@ public class JIFNotas extends javax.swing.JInternalFrame {
     
     private Entidades getEntidade(int idPesquisa) {
         DataSource dataSource = new DataSource();
-        Entidades result = null;
+        Entidades result = new Entidades();
+        boolean userFound = false;
 
         try {
             String SQL = "SELECT * FROM entidades WHERE id = ?;";
@@ -118,7 +115,7 @@ public class JIFNotas extends javax.swing.JInternalFrame {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        result = new Entidades();
+                        userFound = true;
                         result.setId(rs.getInt("id"));
                         result.setNome(rs.getString("nome"));
                         result.setTipo(rs.getString("tipo"));
@@ -131,8 +128,12 @@ public class JIFNotas extends javax.swing.JInternalFrame {
             Logger.getLogger(JIFPDV.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        if (userFound == false) {
+            result.setNome("<html><font color='red'>Não Encontrado</font></html>");
+        }
+        
         return result;
-    }    
+    }
 
     private void atualizarTabela(String idPesquisa, Timestamp dataPesquisa, String fornecedorId) {
         DataSource dataSource = new DataSource();

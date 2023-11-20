@@ -275,12 +275,12 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(representante, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(representante, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(telefoneRepresentante, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                        .addGap(288, 288, 288))
+                        .addComponent(telefoneRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(344, 344, 344))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -297,7 +297,7 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(nome)
+                                .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -416,7 +416,7 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
                 .addComponent(jToggleButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 569, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +545,7 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
             }
         });
         table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        table.setMinimumSize(new java.awt.Dimension(150, 0));
+        table.setMinimumSize(new java.awt.Dimension(100, 0));
         table.setShowGrid(true);
         table.getTableHeader().setReorderingAllowed(false);
         table.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -559,7 +559,7 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
             table.getColumnModel().getColumn(1).setPreferredWidth(100);
             table.getColumnModel().getColumn(6).setPreferredWidth(100);
             table.getColumnModel().getColumn(11).setPreferredWidth(120);
-            table.getColumnModel().getColumn(12).setPreferredWidth(130);
+            table.getColumnModel().getColumn(12).setPreferredWidth(140);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

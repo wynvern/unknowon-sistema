@@ -8,14 +8,11 @@ import dao.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import models.Entidades;
 import classes.ComboItem;
 import classes.ConverterData;
-import static java.lang.System.currentTimeMillis;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import javax.swing.JOptionPane;
@@ -203,7 +200,8 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
     
     private Produtos getProduto(int idPesquisa) {
         DataSource dataSource = new DataSource();
-        Produtos result = null;
+        Produtos result = new Produtos();
+        boolean productFound = false;
 
         try {
             String SQL = "SELECT * FROM produtos WHERE id = ?;";
@@ -213,7 +211,7 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        result = new Produtos();
+                        productFound = true;
                         result.setId(rs.getInt("id"));
                         result.setDescricao(rs.getString("descricao"));
                         result.setEstoque(rs.getInt("estoque"));
@@ -225,6 +223,11 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(JIFPDV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (productFound == false) {
+            result.setDescricao("<html><font color='red'>Não Encontrado</font></html>");
+            result.setId(0);
         }
 
         return result;
@@ -440,10 +443,19 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
                 Logger.getLogger(JIFProdutos.class.getName()).log(Level.SEVERE, null, ex);
             }
             
+            boolean foundMatch = false;
+            
             while(rs.next()){
                 ComboItem comboItem = new ComboItem(rs.getString("nome") + "   -   Código: " + rs.getString("id"), rs.getString("id"));
                 fornecedoresBox.addItem(comboItem);
+                foundMatch = true;
             }
+            
+            if (!foundMatch) {
+                ComboItem comboItem = new ComboItem("<html><font color='red'>Não Encontrado</font></html>", "");
+                fornecedoresBox.addItem(comboItem);
+            }
+            
             if (!searchId.equals("") || !searchDesc.equals("")) {
                 ComboItem emptyItem = new ComboItem("Selecione uma opção...", "");
                 fornecedoresBox.addItem(emptyItem);
