@@ -18,7 +18,10 @@ import java.sql.Timestamp;
 import classes.ComboItem;
 import static classes.ConverterData.converterEmData;
 import java.sql.Connection;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import models.Entidades;
 
 /**
@@ -474,6 +477,14 @@ public class JIFNotas extends javax.swing.JInternalFrame {
             janela.setVisible(true);
             notasAlterarOpened = true;
         }
+        JInternalFrame frame = JFSistema.getInternalFrameByTitle("Adicionar Nota");
+        frame.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                atualizarTabela("", null, "");
+                atualizarListaFornecedores("", "");
+            }
+        });
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

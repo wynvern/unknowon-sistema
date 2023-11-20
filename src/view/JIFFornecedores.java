@@ -533,7 +533,7 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Telefone", "Email", "CNPJ", "UF", "Complemento", "Endereco", "Bairro", "CEP", "Cidade", "Representante", "Telefone Representante"
+                "Código", "Nome", "Telefone", "Email", "CNPJ", "UF", "Complemento", "Endereco", "Bairro", "CEP", "Cidade", "Representante", "Telefone Rep."
             }
         ) {
             boolean[] canEdit = new boolean [] {

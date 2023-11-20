@@ -276,6 +276,11 @@ public class JIFPerfil extends javax.swing.JInternalFrame {
         String emailABC = usuarioLogado.getEmail();
         String telefoneABC = usuarioLogado.getTelefone();
         String senhaABC = usuarioLogado.getSenha();
+        
+        if (nome.getText().length() > 50) {
+            JOptionPane.showMessageDialog(null, "O nome não pode ser maior que 60 caractéres.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
         try{
             String SQL = "UPDATE usuarioSistema SET imagemPerfil=?,nome=?,senha=?,email=?,telefone=? WHERE id=?";

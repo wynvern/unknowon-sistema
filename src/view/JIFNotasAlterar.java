@@ -263,8 +263,8 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
             ps.setInt(1,nota.getIdEntidade());
             ps.setString(2,nota.getTipo());
             ps.setTimestamp(3,nota.getData());
-            ps.setInt(5, Integer.parseInt(nota.getNumeroNota()));
-            ps.setFloat(6, nota.getPrecoTotal());
+            ps.setInt(4, Integer.parseInt(nota.getNumeroNota()));
+            ps.setFloat(5, nota.getPrecoTotal());
             
             // executa a inserção no banco
             ps.executeUpdate();
@@ -543,7 +543,7 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Notas de Entrada");
+        setTitle("Adicionar Nota");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Nota.png"))); // NOI18N
 
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sair.png"))); // NOI18N
@@ -581,7 +581,7 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
             }
         });
 
-        quantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
+        quantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 999, 1));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);

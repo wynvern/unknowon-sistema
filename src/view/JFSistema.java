@@ -41,6 +41,7 @@ public class JFSistema extends javax.swing.JFrame {
     public boolean themeColor = true;
     public static boolean perfilOpened = false;
     public static usuarioSistema usuarioLogado = null;  
+    public static boolean maximized = true;
     
     
     public static JInternalFrame getInternalFrameByTitle(String title) {
@@ -53,6 +54,16 @@ public class JFSistema extends javax.swing.JFrame {
         }
 
         return null; // Internal frame not found
+    }
+    
+    private static String truncateString(String input) {
+        if (input.length() <= 15) {
+            // No need to truncate if the string is already within or equal to the desired length
+            return input;
+        } else {
+            // Truncate the string and add "..."
+            return input.substring(0, 15 - 3) + "...";
+        }
     }
     
     // Set frame to the top by name
@@ -78,7 +89,7 @@ public class JFSistema extends javax.swing.JFrame {
         imageIcon = new ImageIcon(imageIcoResized);
         imageLabel.setIcon(imageIcon);
         
-        nomeUsuario.setText("Bem-vindo, " + usuarioLogado.getNome());
+        nomeUsuario.setText("Bem-vindo, " + truncateString(usuarioLogado.getNome()));
     }
     
     /*
@@ -135,6 +146,8 @@ public class JFSistema extends javax.swing.JFrame {
         this.setIconImage(img);
         String theme = ConfigFile.getVariable("theme");
         updateTheme(theme);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        SwingUtilities.updateComponentTreeUI(this);
     }
 
     /**
@@ -753,18 +766,20 @@ public class JFSistema extends javax.swing.JFrame {
             } else {
                 updateTheme("dark");
             }
+            System.exit(0);
         }
-        System.exit(0);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        this.setUndecorated(true);
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	this.setUndecorated(true);
-	this.setLayout( null );
-        SwingUtilities.updateComponentTreeUI(this);
+        if (!maximized) {
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            SwingUtilities.updateComponentTreeUI(this);
+        } else {
+            this.setExtendedState(JFrame.NORMAL);
+            SwingUtilities.updateComponentTreeUI(this);
+        }
+
+ 
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

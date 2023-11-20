@@ -652,7 +652,7 @@
                 <Column editable="false" title="CEP" type="java.lang.Object"/>
                 <Column editable="false" title="Cidade" type="java.lang.Object"/>
                 <Column editable="false" title="Representante" type="java.lang.Object"/>
-                <Column editable="false" title="Telefone Representante" type="java.lang.Object"/>
+                <Column editable="false" title="Telefone Rep." type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="autoResizeMode" type="int" value="0"/>
