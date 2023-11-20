@@ -713,6 +713,8 @@ public class JIFVender extends javax.swing.JInternalFrame {
         String valuePesquisa = JOptionPane.showInputDialog(null, "Descrição do produto:");
         String idPesquisa = JOptionPane.showInputDialog(null, "Id do produto:");
         
+        if (idPesquisa == null) idPesquisa = "";
+        if (valuePesquisa == null) valuePesquisa = "";
         if (valuePesquisa.isEmpty()) valuePesquisa = "";
         if (idPesquisa.isEmpty()) idPesquisa = "";
         
@@ -800,6 +802,8 @@ public class JIFVender extends javax.swing.JInternalFrame {
         String valuePesquisa = JOptionPane.showInputDialog(null, "Nome do cliente:");
         String idPesquisa = JOptionPane.showInputDialog(null, "Id do cliente:");
         
+        if (idPesquisa == null) idPesquisa = "";
+        if (valuePesquisa == null) valuePesquisa = "";
         if (valuePesquisa.isEmpty()) valuePesquisa = "";
         if (idPesquisa.isEmpty()) idPesquisa = "";
         
@@ -847,6 +851,8 @@ public class JIFVender extends javax.swing.JInternalFrame {
         String valuePesquisa = JOptionPane.showInputDialog(null, "Descrição do tipo de pagamento:");
         String idPesquisa = JOptionPane.showInputDialog(null, "Id do pagamento:");
         
+        if (idPesquisa == null) idPesquisa = "";
+        if (valuePesquisa == null) valuePesquisa = "";
         if (valuePesquisa.isEmpty()) valuePesquisa = "";
         if (idPesquisa.isEmpty()) idPesquisa = "";
         
