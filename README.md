@@ -36,3 +36,4 @@ Projeto para a Cantina da Carla
 - [ ] Código tranca quando usuário a ser chamado não está presente no banco.
 
 - [ ] Quanto janela já está aberta, selecioná-la
+- [ ] Campos de seleção atualizam quando adicionado algo (produto, cliente, fornecedor...)
