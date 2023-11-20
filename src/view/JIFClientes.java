@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -504,7 +503,7 @@ public class JIFClientes extends javax.swing.JInternalFrame {
             return;
         }
         
-        if (nome.getText().equals("") || telefone.getText().equals("") || representante.getText().equals("") || turma.getText().equals("")) {
+        if (nome.getText().equals("") || telefone.getText().equals("") || representante.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -668,7 +667,7 @@ public class JIFClientes extends javax.swing.JInternalFrame {
                 model.removeRow(i);
             }
             
-            String SQL = "SELECT * FROM entidades WHERE (id = ? OR ? = '') AND (nome LIKE ? OR ? LIKE '') AND (representante LIKE ? OR ? LIKE '');";
+            String SQL = "SELECT * FROM entidades WHERE (id = ? OR ? = '') AND (nome LIKE ? OR ? LIKE '') AND (representante LIKE ? OR ? LIKE '') AND tipo = ?;";
             
             try {
                 // para mandar como uma instrução, precisa usar o PreparedStatement
@@ -680,7 +679,7 @@ public class JIFClientes extends javax.swing.JInternalFrame {
                 ps.setString(4, "%" + nomePesquisa.getText() + "%"); 
                 ps.setString(5, "%" + representantePesquisa.getText() + "%");
                 ps.setString(6, "%" + representantePesquisa.getText() + "%");
-                
+                ps.setString(7, "Cliente");
             } catch (SQLException ex) {
                 Logger.getLogger(JIFClientes.class.getName()).log(Level.SEVERE, null, ex);
             }

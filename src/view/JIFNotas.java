@@ -504,6 +504,8 @@ public class JIFNotas extends javax.swing.JInternalFrame {
         String valuePesquisa = JOptionPane.showInputDialog(null, "Nome do fornecedor:");
         String idPesquisa = JOptionPane.showInputDialog(null, "Id do fornecedor:");
         
+        if (idPesquisa == null) idPesquisa = "";
+        if (valuePesquisa == null) valuePesquisa = "";
         if (valuePesquisa.isEmpty()) valuePesquisa = "";
         if (idPesquisa.isEmpty()) idPesquisa = "";
         

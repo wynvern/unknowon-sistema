@@ -78,7 +78,7 @@ public class JFSistema extends javax.swing.JFrame {
         imageIcon = new ImageIcon(imageIcoResized);
         imageLabel.setIcon(imageIcon);
         
-        nomeUsuario.setText("Bem vindo " + usuarioLogado.getNome());
+        nomeUsuario.setText("Bem-vindo, " + usuarioLogado.getNome());
     }
     
     /*

@@ -42,7 +42,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
         ComboItem selectedComboItem = (ComboItem) clientesBox.getSelectedItem();
         String value = selectedComboItem.getValue();    
         
-        ComboItem selectedComboItemPRoduto = (ComboItem) produtosBox.getSelectedItem();
+        ComboItem selectedComboItemPRoduto = (ComboItem) pagamentosBox.getSelectedItem();
         String valueProduto = selectedComboItemPRoduto.getValue();    
         
         Timestamp timestamp = new Timestamp(currentTimeMillis()) {};

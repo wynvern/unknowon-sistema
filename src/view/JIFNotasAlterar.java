@@ -257,13 +257,12 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
         Connection con = dataSource.getConnection();
         PreparedStatement ps = null;
         try{
-            String SQL = "INSERT INTO notas (idEntidade, tipo, data, pendurado, numeroNota, precoTotal) VALUES (?, ?, ?, ?, ?, ?)";
+            String SQL = "INSERT INTO notas (idEntidade, tipo, data, numeroNota, precoTotal) VALUES (?, ?, ?, ?, ?)";
             
             ps = con.prepareStatement(SQL);
             ps.setInt(1,nota.getIdEntidade());
             ps.setString(2,nota.getTipo());
             ps.setTimestamp(3,nota.getData());
-            ps.setBoolean(4,false);
             ps.setInt(5, Integer.parseInt(nota.getNumeroNota()));
             ps.setFloat(6, nota.getPrecoTotal());
             
@@ -857,6 +856,8 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
         String valuePesquisa = JOptionPane.showInputDialog(null, "Nome do fornecedor:");
         String idPesquisa = JOptionPane.showInputDialog(null, "Id do fornecedor:");
         
+        if (idPesquisa == null) idPesquisa = "";
+        if (valuePesquisa == null) valuePesquisa = "";
         if (valuePesquisa.isEmpty()) valuePesquisa = "";
         if (idPesquisa.isEmpty()) idPesquisa = "";
         
