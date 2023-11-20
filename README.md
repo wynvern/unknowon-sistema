@@ -6,11 +6,11 @@ Projeto para a Cantina da Carla
 
 - [x] As notas de saída modificam automaticamente o estoque e exibem o valor total nelas.
 
-- [ ] Atualização automática do Ponto de Venda (PDV) ao finalizar uma venda.
+- [x] Atualização automática do Ponto de Venda (PDV) ao finalizar uma venda.
 
-- [ ] Funções que recuperam informações por meio de identificadores (ID) para remover código redundante em outros arquivos.
+~~- [ ] Funções que recuperam informações por meio de identificadores (ID) para remover código redundante em outros arquivos.~~  
 
-- [ ] Opção para adicionar clientes ou fornecedores durante a seleção.
+- [x] Opção para adicionar clientes ou fornecedores durante a seleção.
 
 - [ ] Controle de permissões com código binário (10101010101010101):
 
@@ -36,3 +36,4 @@ Projeto para a Cantina da Carla
 - [ ] Código tranca quando usuário a ser chamado não está presente no banco.
 
 - [ ] Quanto janela já está aberta, selecioná-la
+- [ ] Campos de seleção atualizam quando adicionado algo (produto, cliente, fornecedor...)
