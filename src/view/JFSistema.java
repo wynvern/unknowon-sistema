@@ -42,6 +42,7 @@ public class JFSistema extends javax.swing.JFrame {
     public static boolean perfilOpened = false;
     public static usuarioSistema usuarioLogado = null;  
     public static boolean maximized = true;
+    public static boolean chatOpened = false;
     
     
     public static JInternalFrame getInternalFrameByTitle(String title) {
@@ -196,6 +197,7 @@ public class JFSistema extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         imageLabel = new javax.swing.JLabel();
         nomeUsuario = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -241,7 +243,7 @@ public class JFSistema extends javax.swing.JFrame {
         JDPLayout.setHorizontalGroup(
             JDPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDPLayout.createSequentialGroup()
-                .addContainerGap(662, Short.MAX_VALUE)
+                .addContainerGap(635, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(60, 60, 60))
         );
@@ -453,6 +455,16 @@ public class JFSistema extends javax.swing.JFrame {
         nomeUsuario.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         nomeUsuario.setText("Nome");
 
+        jButton11.setBackground(new java.awt.Color(255, 255, 255));
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/chat.png"))); // NOI18N
+        jButton11.setBorderPainted(false);
+        jButton11.setContentAreaFilled(false);
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -462,7 +474,9 @@ public class JFSistema extends javax.swing.JFrame {
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nomeUsuario)
-                .addGap(0, 132, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addComponent(jButton11)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,7 +484,8 @@ public class JFSistema extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(nomeUsuario)
-                    .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton11))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -648,8 +663,8 @@ public class JFSistema extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JDP)
                 .addContainerGap())
@@ -895,6 +910,18 @@ public class JFSistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu6ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        if (!chatOpened) {
+            JIFChat janela = new JIFChat();
+            JDP.add(janela);
+            janela.setLocation((JDP.getWidth() - janela.getWidth())/2,(JDP.getHeight() - janela.getHeight())/2);
+            janela.setVisible(true);
+            chatOpened = true;
+        } else {
+            bringInternalFrameToFront(JDP, "Métodos de Pagamento");
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -924,6 +951,7 @@ public class JFSistema extends javax.swing.JFrame {
     private static javax.swing.JLabel imageLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
