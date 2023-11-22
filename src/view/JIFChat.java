@@ -4,6 +4,7 @@
  */
 package view;
 
+import static classes.ConfigFile.getVariable;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -43,7 +44,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
         messagePanel.repaint();
         
         try {
-            socket = new Socket("localhost", 8888);
+            socket = new Socket(getVariable("hostnameChat"), Integer.parseInt(getVariable("portChat")));
             System.out.println("Connected to the server.");
 
             inV = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -61,7 +62,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
                                 String[] splitted = splitStringByLastDelimiter(receivedMessage, ",");
 
                                 String text = splitted[1];
-                                String base64Image = splitted[0];
+                                String base64Image = splitted[0];, 
 
                                 // Decode the Base64 image back to bytes
                                 byte[] imageBytes = Base64.getDecoder().decode(base64Image);

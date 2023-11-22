@@ -29,6 +29,8 @@ public class ConfigFile {
         defaultProperties.setProperty("port", "3306");
         defaultProperties.setProperty("theme", "white");
         defaultProperties.setProperty("username", "x");
+        defaultProperties.setProperty("portChat", "x");
+        defaultProperties.setProperty("hostnameChat", "x");
 
         // Write the default properties to the file
         try (OutputStream output = new FileOutputStream(filePath)) {
