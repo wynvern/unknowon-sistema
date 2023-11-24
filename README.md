@@ -12,34 +12,34 @@ Projeto para a Cantina da Carla
 
 - [x] Opção para adicionar clientes ou fornecedores durante a seleção.
 
-- [ ] Controle de permissões com código binário (10101010101010101):
+~~- [ ] Controle de permissões com código binário (10101010101010101):~~
 
   - 0 (PDV): Se 1, o usuário possui permissão no PDV.
   - 1 (Geral): Se verdadeiro (1) ou falso (0).
 
-- [ ] Opção de logout.
+- [x] Opção de logout.
 
 - [x] Controle de Registros de Saída (RS) em aberto no PDV e notas.
 
-- [ ] Tratamento de estoque negativo.
+- [x] Tratamento de estoque negativo.
 
-- [ ] Melhoria da responsividade horizontal.
+- [x] Melhoria da responsividade horizontal.
 
-- [ ] Resolução de problemas com datas não interpretáveis.
+- [x] Resolução de problemas com datas não interpretáveis.
 
 - [ ] Correção do erro deprecated ao obter texto para senha.
 
-- [ ] Validação rigorosa dos tipos de entrada para pesquisa.
+- [x] Validação rigorosa dos tipos de entrada para pesquisa.
 
-- [ ] Correção de inconsistências nos dados da nota.
+- [x] Correção de inconsistências nos dados da nota.
 
-- [ ] Código tranca quando usuário a ser chamado não está presente no banco.
+- [x] Código tranca quando usuário a ser chamado não está presente no banco.
 
-- [ ] Quanto janela já está aberta, selecioná-la
+- [x] Quanto janela já está aberta, selecioná-la
 - [ ] Campos de seleção atualizam quando adicionado algo (produto, cliente, fornecedor...)
-- [ ] Nome para cada panel através do sistema.
-- [ ] Pagar por saldo
+- [x] Nome para cada panel através do sistema.
+- [ ] Pagar por saldo (também adicionar saldo)
 - [ ] Enter para pesquisar
-- [ ] Evitar duplicação de linhas
-- [ ] mudar as cores dos Campos desabilitados
+- [x] Evitar duplicação de linhas
+- [x] mudar as cores dos Campos desabilitados
 - [ ] Limite de entrada de dados
