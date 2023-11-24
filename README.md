@@ -38,7 +38,7 @@ Projeto para a Cantina da Carla
 - [x] Quanto janela já está aberta, selecioná-la
 - [ ] Campos de seleção atualizam quando adicionado algo (produto, cliente, fornecedor...)
 - [x] Nome para cada panel através do sistema.
-- [ ] Pagar por saldo
+- [ ] Pagar por saldo (também adicionar saldo)
 - [ ] Enter para pesquisar
 - [ ] Evitar duplicação de linhas
 - [x] mudar as cores dos Campos desabilitados
