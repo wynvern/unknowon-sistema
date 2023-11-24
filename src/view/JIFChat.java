@@ -13,11 +13,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -45,7 +45,6 @@ public class JIFChat extends javax.swing.JInternalFrame {
         
         try {
             socket = new Socket(getVariable("hostnameChat"), Integer.parseInt(getVariable("portChat")));
-            System.out.println("Connected to the server.");
 
             inV = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             outV = new PrintWriter(socket.getOutputStream(), true);
@@ -57,12 +56,11 @@ public class JIFChat extends javax.swing.JInternalFrame {
                     try {
                         while (true) {
                             String receivedMessage = inV.readLine();
-                            System.out.println(receivedMessage);
                             if (receivedMessage != null) {
                                 String[] splitted = splitStringByLastDelimiter(receivedMessage, ",");
 
                                 String text = splitted[1];
-                                String base64Image = splitted[0];, 
+                                String base64Image = splitted[0];
 
                                 // Decode the Base64 image back to bytes
                                 byte[] imageBytes = Base64.getDecoder().decode(base64Image);
@@ -78,10 +76,12 @@ public class JIFChat extends javax.swing.JInternalFrame {
 
                                 messagePanel.revalidate();
                                 messagePanel.repaint();
+                                
+                                JScrollBar verticalScrollBar = Panel.getVerticalScrollBar();
+                                verticalScrollBar.setValue(verticalScrollBar.getMaximum() +  50);
                             }
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
             });
@@ -137,7 +137,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
         jTextArea1 = new javax.swing.JTextArea();
         message = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        Panel = new javax.swing.JScrollPane();
         messagePanel = new javax.swing.JPanel();
 
         jTextArea1.setColumns(20);
@@ -154,7 +154,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
             }
         });
 
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        Panel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         messagePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -169,7 +169,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
             .addGap(0, 245, Short.MAX_VALUE)
         );
 
-        jScrollPane2.setViewportView(messagePanel);
+        Panel.setViewportView(messagePanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,7 +178,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(Panel)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(message)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,7 +189,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
@@ -219,11 +219,13 @@ public class JIFChat extends javax.swing.JInternalFrame {
         imageIcon = new ImageIcon(imageIcoResized);
         profilePicture.setIcon(imageIcon);
         
-        
-        JTextArea messageLabel = new JTextArea(message);
+        int actualPanelWidth = panel.getSize().width;
+        int nameSize = nomeLabel.getPreferredSize().width;
+        JTextArea messageLabel = new JTextArea(insertLineBreaks(message, actualPanelWidth - nameSize - 350));
         messageLabel.setEditable(false);
-        messageLabel.setWrapStyleWord(true); 
-        messageLabel.setPreferredSize(new Dimension(messagePanel.getWidth() - 50 - nomeLabel.getPreferredSize().width - 20,  20));
+        messageLabel.setLineWrap(true);  // Enable line wrap
+        messageLabel.setWrapStyleWord(true);  // Enable word wrap
+        messageLabel.setPreferredSize(new Dimension(panel.getSize().width - nomeLabel.getPreferredSize().width - 70, messageLabel.getPreferredSize().height));
         
         
         panel.add(profilePicture);
@@ -235,6 +237,23 @@ public class JIFChat extends javax.swing.JInternalFrame {
         return panel;
     }
 
+    public static String insertLineBreaks(String input, int maxCharactersPerLine) {
+        StringBuilder result = new StringBuilder();
+        int charCount = 0;
+
+        for (char c : input.toCharArray()) {
+            result.append(c);
+            charCount++;
+
+            if (charCount == maxCharactersPerLine) {
+                result.append("\n");
+                charCount = 0;
+            }
+        }
+
+        return result.toString();
+    }
+    
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (message.getText().equals("")) return;
@@ -255,14 +274,17 @@ public class JIFChat extends javax.swing.JInternalFrame {
         messagePanel.revalidate();
         messagePanel.repaint();
         
+        JScrollBar verticalScrollBar = Panel.getVerticalScrollBar();
+        verticalScrollBar.setValue(verticalScrollBar.getMaximum() + 50);
+        
         message.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane Panel;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField message;
     private javax.swing.JPanel messagePanel;

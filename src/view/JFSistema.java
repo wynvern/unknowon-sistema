@@ -6,6 +6,7 @@ package view;
 
 import classes.ConfigFile;
 import classes.InverterIcones;
+import java.awt.Dimension;
 import models.usuarioSistema;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -43,7 +44,6 @@ public class JFSistema extends javax.swing.JFrame {
     public static usuarioSistema usuarioLogado = null;  
     public static boolean maximized = true;
     public static boolean chatOpened = false;
-    
     
     public static JInternalFrame getInternalFrameByTitle(String title) {
         JInternalFrame[] frames = JDP.getAllFrames();
@@ -90,7 +90,7 @@ public class JFSistema extends javax.swing.JFrame {
         imageIcon = new ImageIcon(imageIcoResized);
         imageLabel.setIcon(imageIcon);
         
-        nomeUsuario.setText("Bem-vindo, " + truncateString(usuarioLogado.getNome()));
+        nomeUsuario.setText("Olá, " + truncateString(usuarioLogado.getNome()));
     }
     
     /*
@@ -149,6 +149,8 @@ public class JFSistema extends javax.swing.JFrame {
         updateTheme(theme);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         SwingUtilities.updateComponentTreeUI(this);
+        
+        this.setMinimumSize(new Dimension(1000, 600));
     }
 
     /**
@@ -203,6 +205,7 @@ public class JFSistema extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -243,7 +246,7 @@ public class JFSistema extends javax.swing.JFrame {
         JDPLayout.setHorizontalGroup(
             JDPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDPLayout.createSequentialGroup()
-                .addContainerGap(635, Short.MAX_VALUE)
+                .addContainerGap(691, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(60, 60, 60))
         );
@@ -380,21 +383,21 @@ public class JFSistema extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator3)
                     .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator4)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator5)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator7)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
@@ -474,7 +477,7 @@ public class JFSistema extends javax.swing.JFrame {
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nomeUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(jButton11)
                 .addContainerGap())
         );
@@ -514,8 +517,18 @@ public class JFSistema extends javax.swing.JFrame {
         jMenu3.add(jMenuItem9);
         jMenu3.add(jSeparator2);
 
+        jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sair.png"))); // NOI18N
+        jMenuItem15.setText("Logout");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem15);
+
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sair.png"))); // NOI18N
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
         jMenuItem5.setText("Fechar");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -918,9 +931,16 @@ public class JFSistema extends javax.swing.JFrame {
             janela.setVisible(true);
             chatOpened = true;
         } else {
-            bringInternalFrameToFront(JDP, "Métodos de Pagamento");
+            getInternalFrameByTitle("Chat").dispose();
+            chatOpened = false;
         }
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        JFLogin janela = new JFLogin();
+        janela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
 
     /**
@@ -979,6 +999,7 @@ public class JFSistema extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

@@ -28,7 +28,6 @@ public class ConverterData {
             // Convert Date to Timestamp
             return new Timestamp(parsedDate.getTime());
         } catch (ParseException e) {
-            e.printStackTrace(); // Handle the exception appropriately
             return null;
         }
     }

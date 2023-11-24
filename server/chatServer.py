@@ -4,8 +4,16 @@ import threading
 # List to store connected client sockets
 connected_clients = []
 
+messages_sent = []
+
 def handle_client(client_socket, address):
     try:
+        # Send existing messages to the newly connected client
+        for message in messages_sent:
+            client_socket.send(message.encode('utf-8'))
+
+        print(f"Client {address} connected")
+
         while True:
             data = client_socket.recv(1024)
             if not data:
@@ -14,6 +22,7 @@ def handle_client(client_socket, address):
             print(f"Received message from {address}")
 
             # Broadcast the message to all connected clients
+            messages_sent.append(message)
             broadcast(message, client_socket)
     except Exception as e:
         print(f"Error handling client {address}: {e}")
@@ -21,6 +30,8 @@ def handle_client(client_socket, address):
         # Remove the client socket from the list when the connection is closed
         connected_clients.remove(client_socket)
         client_socket.close()
+        print(f"Client {address} disconnected")
+
 
 def broadcast(message, sender_socket):
     # Iterate through all connected clients and send the message
