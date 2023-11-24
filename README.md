@@ -25,13 +25,13 @@ Projeto para a Cantina da Carla
 
 - [x] Melhoria da responsividade horizontal.
 
-- [ ] Resolução de problemas com datas não interpretáveis.
+- [x] Resolução de problemas com datas não interpretáveis.
 
 - [ ] Correção do erro deprecated ao obter texto para senha.
 
-- [ ] Validação rigorosa dos tipos de entrada para pesquisa.
+- [x] Validação rigorosa dos tipos de entrada para pesquisa.
 
-- [ ] Correção de inconsistências nos dados da nota.
+- [x] Correção de inconsistências nos dados da nota.
 
 - [x] Código tranca quando usuário a ser chamado não está presente no banco.
 
@@ -40,6 +40,6 @@ Projeto para a Cantina da Carla
 - [x] Nome para cada panel através do sistema.
 - [ ] Pagar por saldo (também adicionar saldo)
 - [ ] Enter para pesquisar
-- [ ] Evitar duplicação de linhas
+- [x] Evitar duplicação de linhas
 - [x] mudar as cores dos Campos desabilitados
 - [ ] Limite de entrada de dados
