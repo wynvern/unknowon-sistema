@@ -13,13 +13,19 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import classes.ComboItem;
 import classes.ConverterData;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.Timestamp;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import models.Notas;
 import models.Produtos;
+import static view.JFSistema.JDP;
+import static view.JFSistema.fornecedoresOpened;
 
 /**
  *
@@ -520,6 +526,7 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
         dataEntrada = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         total = new javax.swing.JTextField();
@@ -656,6 +663,13 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar.png"))); // NOI18N
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -676,7 +690,9 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fornecedoresBox, 0, 465, Short.MAX_VALUE)
+                .addComponent(jButton9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fornecedoresBox, 0, 507, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -691,7 +707,8 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
                     .addComponent(jLabel21)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(fornecedoresBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fornecedoresBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -897,9 +914,6 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
         
         if (valuePesquisa.isEmpty()) valuePesquisa = "";
         if (idPesquisa.isEmpty()) idPesquisa = "";
-        
-        System.out.println(idPesquisa);
-        System.out.println(valuePesquisa);
 
         atualizarListaProdutos(idPesquisa, valuePesquisa);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -1079,6 +1093,31 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        if (!fornecedoresOpened) {
+            JIFClientes janela = new JIFClientes();
+            JDP.add(janela);
+            try {
+                janela.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(JFSistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            janela.setVisible(true);
+            fornecedoresOpened = true;
+        } else {
+            JFSistema.bringInternalFrameToFront(JDP, "Cadastro de Clientes");
+        }
+
+        JInternalFrame frame = JFSistema.getInternalFrameByTitle("Cadastro de Clientes");
+        frame.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                // Code to execute when the internal frame is closed
+                atualizarListaFornecedores("", "");
+            }
+        });
+    }//GEN-LAST:event_jButton9ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField dataEntrada;
@@ -1091,6 +1130,7 @@ public class JIFNotasAlterar extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;

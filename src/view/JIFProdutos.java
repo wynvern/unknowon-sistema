@@ -510,6 +510,13 @@ public class JIFProdutos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        
+        if (!codigo.getText().equals("")) {
+            int opcao = JOptionPane.showConfirmDialog(null,"O Produto selecionado será duplicado, deseja continuar?","Confirmação",JOptionPane.YES_OPTION);
+            if(opcao != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
 
         produto.setDescricao(descricao.getText());
         produto.setValor(Float.parseFloat(valor.getText()));

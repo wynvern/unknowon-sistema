@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import javax.swing.JInternalFrame;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import models.Entidades;
 import models.Produtos;
 import static view.JFSistema.JDP;
 import static view.JFSistema.clientesOpened;
@@ -739,11 +740,11 @@ public class JIFVender extends javax.swing.JInternalFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -884,8 +885,16 @@ public class JIFVender extends javax.swing.JInternalFrame {
         ComboItem selectedComboItem = (ComboItem) clientesBox.getSelectedItem();
         String value = selectedComboItem.getValue();    
         
+        ComboItem selectedComboItemPagamento = (ComboItem) pagamentosBox.getSelectedItem();
+        String valuePagamento = selectedComboItemPagamento.getValue();    
+        
         if (value.equals("")) {
-            JOptionPane.showMessageDialog(null, "Nenhum Cliente Selecionado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum Cliente selecionado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        if (valuePagamento.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nenhum método de pagamento selecionado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
@@ -899,6 +908,7 @@ public class JIFVender extends javax.swing.JInternalFrame {
         
         if(opcao == JOptionPane.YES_OPTION) {
             salvarDatabase();
+            if (valuePagamento.equals("4")) diminuirSaldoCliente(value, total.getText());
             JOptionPane.showMessageDialog(null, "Venda finalizada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             JFSistema.venderOpened = false;
@@ -990,4 +1000,31 @@ public class JIFVender extends javax.swing.JInternalFrame {
     private javax.swing.JTable table;
     private javax.swing.JTextField total;
     // End of variables declaration//GEN-END:variables
+
+    private void diminuirSaldoCliente(String id, String valor) {
+        DataSource dataSource = new DataSource();
+        Connection con = dataSource.getConnection();
+        PreparedStatement ps = null;
+        
+        try{
+            String SQL = "UPDATE entidades SET saldo = saldo - ? WHERE id = ?";
+
+            ps = con.prepareStatement(SQL);
+            ps.setFloat(1, Float.parseFloat(valor));
+            ps.setInt(2,Integer.parseInt(id));
+            
+            // executa a inserção no banco
+            ps.executeUpdate();
+            ps.close();
+            
+        }
+        catch (SQLException ex){
+            //System.err.println("Erro ao salvar os dados "+ex.getMessage());
+            JOptionPane.showMessageDialog(null,"Erro ao alterar!\n"+ex);
+        }
+        finally{
+            // fecha o statement e o datasource
+            dataSource.closeDataSource();
+        }
+    }
 }

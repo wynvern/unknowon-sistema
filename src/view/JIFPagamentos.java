@@ -319,7 +319,7 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
         }
         
         if (!codigo.getText().equals("")) {
-            int opcao = JOptionPane.showConfirmDialog(null,"O Cliente selecionado será duplicado, deseja continuar?","Confirmação",JOptionPane.YES_OPTION);
+            int opcao = JOptionPane.showConfirmDialog(null,"O método de pagamento selecionado será duplicado, deseja continuar?","Confirmação",JOptionPane.YES_OPTION);
             if(opcao != JOptionPane.YES_OPTION) {
                 return;
             }
@@ -356,6 +356,12 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if ((codigo.getText()).equals("")) {
             JOptionPane.showMessageDialog(null, "Nenhuma coluna selecionada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        if ((codigo.getText()).equals("4")) {
+            // Opção saldo
+            JOptionPane.showMessageDialog(null, "A opção de saldo do usuário não pode ser alterada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
@@ -396,6 +402,12 @@ public class JIFPagamentos extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if ((codigo.getText()).equals("")) {
             JOptionPane.showMessageDialog(null, "Nenhuma coluna selecionada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        if ((codigo.getText()).equals("4")) {
+            // Opção saldo
+            JOptionPane.showMessageDialog(null, "A opção de saldo do usuário não pode ser alterada.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
