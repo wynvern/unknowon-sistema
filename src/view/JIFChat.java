@@ -78,7 +78,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
                                 messagePanel.repaint();
                                 
                                 JScrollBar verticalScrollBar = Panel.getVerticalScrollBar();
-                                verticalScrollBar.setValue(verticalScrollBar.getMaximum() +  50);
+                                verticalScrollBar.setValue(verticalScrollBar.getMaximum() +  messageDistance + 50);
                             }
                         }
                     } catch (IOException e) {
@@ -275,7 +275,7 @@ public class JIFChat extends javax.swing.JInternalFrame {
         messagePanel.repaint();
         
         JScrollBar verticalScrollBar = Panel.getVerticalScrollBar();
-        verticalScrollBar.setValue(verticalScrollBar.getMaximum() + 50);
+        verticalScrollBar.setValue(verticalScrollBar.getMaximum() + messageDistance + 50);
         
         message.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed

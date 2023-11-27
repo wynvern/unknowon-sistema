@@ -209,6 +209,7 @@ public class JIFClientes extends javax.swing.JInternalFrame {
         jLabel9.setText("Saldo:");
 
         saldo.setEditable(false);
+        saldo.setText("0.0");
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
