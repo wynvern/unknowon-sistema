@@ -10,11 +10,14 @@ import configparser
 config = configparser.ConfigParser()
 config.read('../config.ini')
 
-parameter_value = sys.argv[1]
+entradaData = sys.argv[1]
+saidaData = sys.argv[2]
 
-# Convert the string to a datetime object
-date_object = time.mktime(datetime.strptime(parameter_value, "%d/%m/%Y").timetuple())
-date_object = datetime.fromtimestamp(date_object)
+date_objectEntrada = time.mktime(datetime.strptime(entradaData, "%d/%m/%Y").timetuple())
+date_objectEntrada = datetime.fromtimestamp(date_objectEntrada)
+
+date_objectSaida = time.mktime(datetime.strptime(saidaData, "%d/%m/%Y").timetuple())
+date_objectSaida = datetime.fromtimestamp(date_objectSaida)
 
 # Establish a connection to your MariaDB database
 conn = mysql.connector.connect(
@@ -26,17 +29,30 @@ conn = mysql.connector.connect(
 
 cursor = conn.cursor()
 
-# Mudar conforme necessidade
-dataAte = date_object.strftime('%Y-%m-%d')
-dataFormatada = date_object.strftime("%d/%m/%Y")
+dataEntradaMysql = date_objectEntrada.strftime('%Y-%m-%d')
+dataEntradaFormatada = date_objectEntrada.strftime("%d/%m/%Y")
 
-cursor.execute(f"SELECT * FROM notasItens WHERE DATE(criadoEm) <= '{dataAte}';")
+dataSaidaMysql = date_objectEntrada.strftime('%Y-%m-%d')
+dataEntradaFormatada = date_objectEntrada.strftime("%d/%m/%Y")
+
+cursor.execute(f"SELECT * FROM notasItens WHERE DATE(criadoEm) BETWEEN '{dataEntradaMysql}' AND '{dataSaidaMysql}';")
 notasItens = cursor.fetchall()
 
 cursor.execute(f"SELECT * FROM produtos;")
 produtos = cursor.fetchall()
 
+cursor.execute(f"SELECT * FROM notas;")
+notas = cursor.fetchall()
+
 movimentacao = {}
+notasMov = {}
+
+for nota in notas:
+     notaC = {}
+     notaC['tipo'] = nota[2]
+     notaC['numeroNota'] = nota[4]
+     notasMov[nota[0]] = notaC
+
 
 for produto in produtos:
     informacoes = {}
@@ -51,6 +67,16 @@ for produto in produtos:
     
     movimentacao[produto[0]] = informacoes
 
+
+for item in notasItens:
+    # changing by id
+
+    if (notasMov[item[1]]['tipo'] == 'Entrada'):
+        movimentacao[item[2]]['entrada'] += item[4]
+        movimentacao[item[2]]['saldo'] += item[3]
+    else:
+        movimentacao[item[2]]['saida'] += item[4]
+        movimentacao[item[2]]['saldo'] -= item[3]
 
 
 
