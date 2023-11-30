@@ -543,7 +543,7 @@ public class JIFClientes extends javax.swing.JInternalFrame {
         email.setText("");
         turma.setText("");
         representante.setText("");
-        saldo.setText("");
+        saldo.setText("0.0");
     
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 

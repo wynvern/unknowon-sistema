@@ -5,7 +5,7 @@ from fpdf import FPDF
 import configparser
 
 config = configparser.ConfigParser()
-config.read('../config.ini')
+config.read('config.ini')
 
 conn = mysql.connector.connect(
     host = config.get('mysql', 'hostname'),
@@ -44,7 +44,7 @@ pdf.image('C:\\Users\\wynvern\\Downloads\\PDF-gen\\banner.png', x=10, y=8, w=30)
 pdf.set_font("Arial", style="B", size=16)  # Adjust the size as needed
 
 # Add title to the header
-pdf.cell(0, 10, 'Inventário de Estoque', ln=True, align='C')
+pdf.cell(0, 10, 'Relatorio de Compras', ln=True, align='C')
 
 # Set font for the date
 pdf.set_font("Arial", size=9)
@@ -57,7 +57,7 @@ total_width = pdf.w - 2 * pdf.l_margin
 num_columns = 6  # Assuming 6 columns in your table
 
 # Header row
-header_labels = ["Código", "Descrição", "Valor Unitário", "Unidade", "Estoque Minimo", "Estoque"]
+header_labels = ["Código", "Descrição", "Valor Un", "Unidade", "Estoque Min", "Estoque"]
 
 # Adjust the factor (0.15) as needed
 col_widths = [total_width * 0.14] * (num_columns - 1)
@@ -87,6 +87,9 @@ grey_color = (220, 220, 220)  # RGB values for grey
 white_color = (255, 255, 255)  # RGB values for white
 current_color = white_color
 
+
+header_labels_correct = ["id", "descricao", "valor", "unidade", "estoqueMinimo", "estoque"]
+
 # Data rows
 for key in produtosAviso:
     # Set x position to the calculated starting position for the first column
@@ -94,21 +97,16 @@ for key in produtosAviso:
 
     pdf.set_fill_color(*current_color)
 
-    # First column
-    pdf.cell(col_widths[0], 5, txt=str(key['id']), border=0, align='C', fill=True)
 
-    # Set x position for the rest of the columns
-    pdf.set_x(start_x + col_widths[0])
-
-    pdf.cell(col_widths[i], 5, txt=str(key['descricao']), border=0, align='C', fill=True)
-    pdf.cell(col_widths[i], 5, txt=str(key['valor']), border=0, align='C', fill=True)
-    pdf.cell(col_widths[i], 5, txt=str(key['unidade']), border=0, align='C', fill=True)
-    pdf.cell(col_widths[i], 5, txt=str(key['estoqueMinimo']), border=0, align='C', fill=True)
-    pdf.cell(col_widths[i], 5, txt=str(key['estoque']), border=0, align='C', fill=True)
-
+    # Loop through columns
+    for i in range(num_columns):
+        if (i == 4 or i == 5): pdf.set_text_color(255, 0, 0)
+        pdf.cell(col_widths[i], 5, txt=str(key[header_labels_correct[i]]), border=0, align='C', fill=True)
+        pdf.set_text_color(0, 0, 0)
 
     pdf.ln()
     current_color = white_color if current_color == grey_color else grey_color
+
 
 
 timestamp = datetime.now().strftime("%Y%m%d%H%M%S")

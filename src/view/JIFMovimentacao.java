@@ -4,6 +4,14 @@
  */
 package view;
 
+import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  *
  * @author wynvern
@@ -27,6 +35,12 @@ public class JIFMovimentacao extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        dataI = new javax.swing.JFormattedTextField();
+        jLabel2 = new javax.swing.JLabel();
+        dataF = new javax.swing.JFormattedTextField();
+        jButton2 = new javax.swing.JButton();
 
         setIconifiable(true);
         setMaximizable(true);
@@ -42,19 +56,75 @@ public class JIFMovimentacao extends javax.swing.JInternalFrame {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar.png"))); // NOI18N
+        jLabel1.setText("Data Inicial:");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar.png"))); // NOI18N
+        jLabel2.setText("Data Final:");
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adicionar.png"))); // NOI18N
+        jButton2.setText("Gerar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataI, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataF, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(dataI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(dataF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(542, Short.MAX_VALUE)
-                .addComponent(jButton1)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(339, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -67,8 +137,76 @@ public class JIFMovimentacao extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            // Specify the path to the Python interpreter and the path to your Python script
+            String pythonInterpreter = "python";
+            String pythonScript = "scripts/movimentacaoEstoque.py";  // Update this with the actual path
+
+            // Provide the script parameter
+            String parameter = dataI.getText();
+            String parameter2 = dataF.getText();
+
+            // Build the command
+            ProcessBuilder processBuilder = new ProcessBuilder(pythonInterpreter, pythonScript, parameter, parameter2);
+
+            // Redirect the error stream to the output stream
+            processBuilder.redirectErrorStream(true);
+
+            // Start the process
+            Process process = processBuilder.start();
+
+            // Read and print the output of the process
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Wait for the process to complete
+            int exitCode = process.waitFor();
+            System.out.println("Python script exited with code: " + exitCode);
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        if (Desktop.isDesktopSupported()) {
+            try {
+                // Specify the folder path
+                String folderPath = "./";
+
+                // Get a list of PDF files in the folder
+                File folder = new File(folderPath);
+                File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".pdf"));
+
+                // Sort the files based on last modified timestamp in descending order
+                Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+
+                if (files.length > 0) {
+                    // Get the most recently modified PDF file
+                    File lastPdf = files[0];
+
+                    // Open the most recently modified PDF file
+                    Desktop.getDesktop().open(lastPdf);
+                } else {
+                    System.out.println("No PDF files found in the folder.");
+                }
+            } catch (IOException e) {
+                // Handle the exception
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField dataF;
+    private javax.swing.JFormattedTextField dataI;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

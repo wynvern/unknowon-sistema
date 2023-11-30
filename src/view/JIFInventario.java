@@ -101,7 +101,7 @@ public class JIFInventario extends javax.swing.JInternalFrame {
                     .addComponent(jButton2)
                     .addComponent(jLabel1)
                     .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +139,7 @@ public class JIFInventario extends javax.swing.JInternalFrame {
         try {
             // Specify the path to the Python interpreter and the path to your Python script
             String pythonInterpreter = "python";
-            String pythonScript = "C:\\Users\\wynvern\\Documents\\code\\unknown-sistema\\pdf\\inventarioEstoque.py";  // Update this with the actual path
+            String pythonScript = "scripts/inventarioEstoque.py";  // Update this with the actual path
 
             // Provide the script parameter
             String parameter = data.getText();
@@ -168,12 +168,10 @@ public class JIFInventario extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
         
-        
-        
         if (Desktop.isDesktopSupported()) {
             try {
                 // Specify the folder path
-                String folderPath = "C:\\Users\\wynvern\\Downloads\\PDF-gen\\";
+                String folderPath = "./";
 
                 // Get a list of PDF files in the folder
                 File folder = new File(folderPath);
