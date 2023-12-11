@@ -172,6 +172,14 @@ def criarTabelaNotas(id):
     total_table_width = sum(col_widths)
     start_x = (pdf.w - total_table_width) / 2
 
+    # Print header labels in bold
+    pdf.set_font("Arial", 'B', 9)
+    for i, header in enumerate(header_labels):
+        pdf.set_x(start_x)
+        pdf.cell(col_widths[i], 5, txt=header, border=0, align='C', ln=False)
+        start_x += col_widths[i]
+    pdf.ln()
+
     # Print data
     for nota in todosItens[id]['notas']:
         start_x = (pdf.w - total_table_width) / 2
@@ -187,6 +195,7 @@ def criarTabelaNotas(id):
         pdf.ln()
 
     pdf.ln(10)  # Add some space between rows
+
 
 
 for x in todosItens:

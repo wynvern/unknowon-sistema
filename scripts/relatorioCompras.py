@@ -42,16 +42,13 @@ pdf.set_font("Arial", size=9)
 
 current_directory = os.getcwd()
 relative_path = os.path.join('src', 'images', 'banner.png')
-
-# Create the full path by joining the current directory and the relative path
 full_path = os.path.abspath(os.path.join(current_directory, relative_path))
-
-# Now you can use the full path in your PDF generation code
 pdf.image(full_path, x=10, y=8, w=30)
+
 pdf.set_font("Arial", style="B", size=16)  # Adjust the size as needed
 
 # Add title to the header
-pdf.cell(0, 10, 'Relatorio de Compras', ln=True, align='C')
+pdf.cell(0, 10, 'Relatório de Compras', ln=True, align='C')
 
 # Set font for the date
 pdf.set_font("Arial", size=9)

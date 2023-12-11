@@ -690,8 +690,7 @@ public class JIFFornecedores extends javax.swing.JInternalFrame {
         }
         
         if (nome.getText().equals("") || telefone.getText().equals("") || email.getText().equals("") ||
-            cep.getText().equals("") || bairro.getText().equals("") || cidade.getText().equals("") ||
-            endereco.getText().equals("") || complemento.getText().equals("") || uf.getText().equals("") ||
+            uf.getText().equals("") ||
             cnpj.getText().equals("") || representante.getText().equals("") || telefoneRepresentante.getText().equals("")) {
 
             JOptionPane.showMessageDialog(null, "Um ou mais campos estão vazios.", "Aviso", JOptionPane.INFORMATION_MESSAGE);

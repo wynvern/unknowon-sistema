@@ -21,7 +21,7 @@ public class ConverterData {
             Date parsedDate = inputDateFormat.parse(dateString);
 
             // Set the time to 12:00:00
-            parsedDate.setHours(12);
+            parsedDate.setHours(0);
             parsedDate.setMinutes(0);
             parsedDate.setSeconds(0);
 

@@ -794,7 +794,7 @@ public class JFSistema extends javax.swing.JFrame {
             } else {
                 updateTheme("dark");
             }
-            System.exit(0);
+            jMenuItem15ActionPerformed(null);
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
