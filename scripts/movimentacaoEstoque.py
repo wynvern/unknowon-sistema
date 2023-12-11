@@ -5,6 +5,7 @@ from fpdf import FPDF
 import sys
 import time
 import configparser
+import os
 
 
 config = configparser.ConfigParser()
@@ -118,7 +119,10 @@ pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", size=9)
 
-pdf.image('C:\\Users\\wynvern\\Downloads\\PDF-gen\\banner.png', x=10, y=8, w=30)
+current_directory = os.getcwd()
+relative_path = os.path.join('src', 'images', 'banner.png')
+full_path = os.path.abspath(os.path.join(current_directory, relative_path))
+pdf.image(full_path, x=10, y=8, w=30)
 
 pdf.set_font("Arial", style="B", size=16)  # Adjust the size as needed
 
